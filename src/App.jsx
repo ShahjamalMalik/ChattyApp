@@ -7,21 +7,16 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-    currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-    messages: [
-        {
-          id: 1,
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 2,
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
-    };
+      currentUser: "",
+      messages: [],
+      
+      websocket: null
+    }
     this.addMessage = this.addMessage.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.onUserChange = this.onUserChange.bind(this)
+    this.sendMessage = this.sendMessage.bind(this)
     
   }
   
@@ -38,8 +33,71 @@ class App extends Component {
 
   }
 
+  sendMessage(e) {
+    var jsonObject = {
+      username: this.state.currentUser,
+      content: this.state.message
+    }
+    
+    if (e.key === "Enter") {
+      this.state.websocket.send(JSON.stringify(jsonObject))
+  }
+  }
 
+  updateUserName(e) {
+
+  }
+  
+  
+  onChange(e) {
+        
+    this.setState({message: e.target.value})
+    
+}
+
+ onUserChange(e) {
+    
+    this.setState({currentUser: e.target.value})
+    
+}
+
+ handleKeyPress(e) {
+    if (e.key === "Enter") {
+        this.setState({id: uuidv1()});
+        this.addMessage(this.state.id, this.state.currentUser, this.state.message)
+    }
+
+}
+
+  
   componentDidMount() {
+    
+    const socket = new WebSocket("ws://localhost:3001");
+
+    socket.onopen = function (e) {
+      this.setState ({ websocket: socket});
+      console.log("Connected to server")
+    }.bind(this)
+
+    
+
+
+
+    socket.onmessage = (e) => {
+      const messages = this.state.messages;
+      const data = JSON.parse(e.data);
+      messages.push(data)
+      this.setState({messages})
+
+      console.log(this.state.messages);
+      
+    }
+
+    socket.onclose = (e) => {
+      console.log(e)
+    }
+    
+
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -60,7 +118,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser.name} addMessage={this.addMessage}/>
+        <ChatBar currentUser={this.state.currentUser.name} sendMessage={this.sendMessage} updateUserName={this.updateUserName} onChange={this.onChange} onUserChange={this.onUserChange}/>
       </div>
     );
   }
