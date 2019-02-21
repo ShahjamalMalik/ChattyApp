@@ -1,19 +1,8 @@
-React Boilerplate
-=====================
+# ChattyApp Project
 
-A minimal and light dev environment for ReactJS.
+A real-time messaging application!
 
-### Usage
-
-Clone the boilerplate and create your own git repo.
-
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+## Getting Started
 
 Install the dependencies and start the server.
 
@@ -23,23 +12,20 @@ npm start
 open http://localhost:3000
 ```
 
-### Static Files
 
-You can store static files like images, fonts, etc in the `build` folder.
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
-
-### Dependencies
+## Dependencies
 
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* uuid
+* ws
+
+
+
+## Final Product
+!["Sent a message with default "Anonymous" username](https://github.com/ShahjamalMalik/ChattyApp/blob/master/Screenshots/Screen%20Shot%202019-02-21%20at%2011.53.07%20AM.png)
+!["Changed the name, received notification for doing so"](https://github.com/ShahjamalMalik/ChattyApp/blob/master/Screenshots/Screen%20Shot%202019-02-21%20at%2011.53.28%20AM.png)
+!["Two different windows open, updating messages sent in real time!"](https://github.com/ShahjamalMalik/ChattyApp/blob/master/Screenshots/Screen%20Shot%202019-02-21%20at%2011.54.04%20AM.png)
