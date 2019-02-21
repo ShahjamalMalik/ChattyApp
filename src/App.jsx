@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: "Bob",
+      currentUser: "Anonymous",
       messages: [],
       amountOfUsers: '',
       websocket: null
@@ -44,6 +44,7 @@ class App extends Component {
     
     if (e.key === "Enter") {
       this.state.websocket.send(JSON.stringify(jsonObject))
+      e.target.value = ''
   }
   }
 
