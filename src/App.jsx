@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       currentUser: "Bob",
       messages: [],
-      totalUsers: '',
+      amountOfUsers: '',
       websocket: null
     }
    
@@ -20,6 +20,7 @@ class App extends Component {
     
   }
   
+  // This is to send the notification data that someone has changed their name
   updateUserName(e) {
     var info = {
       type: "postNotification",
@@ -33,7 +34,7 @@ class App extends Component {
     }
   }  
 
-
+  // This is to send the message data to the server
   sendMessage(e) {
     var jsonObject = {
       type: "postMessage",
@@ -60,7 +61,7 @@ class App extends Component {
     
 
 
-
+    // Thsi is to push the data into the messages array in our state so it can display.
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.type) {
@@ -73,7 +74,7 @@ class App extends Component {
       } else {
         // add this set time out animation to offset weired user exp when loading time is milisecond
         setTimeout(() => {
-          this.setState({totalUsers: data})
+          this.setState({amountOfUsers: data})
         }, 400)
       }
     }
@@ -100,7 +101,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar totalUsers={this.state.totalUsers}/>
+        <NavBar amountOfUsers={this.state.amountOfUsers}/>
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser.name} sendMessage={this.sendMessage} updateUserName={this.updateUserName}/>
       </div>
