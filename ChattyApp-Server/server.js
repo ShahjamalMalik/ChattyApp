@@ -48,7 +48,7 @@ wss.on('connection', ws => {
   
   // Check the userMessage type to see if it is a message or a notification, send back accordingly.
   ws.on('message', function incoming(data) {
-    console.log(data)
+   
     
     var userMessage = JSON.parse(data)
 
