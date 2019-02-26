@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-const uuidv1 = require('uuid/v1');
-
 class ChatBar extends Component {
     
    

@@ -1,22 +1,21 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
-import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 import NavBar from './NavBar.jsx';
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       currentUser: "Anonymous",
       messages: [],
       amountOfUsers: '',
       websocket: null
-    }
+    };
    
     
-    this.sendMessage = this.sendMessage.bind(this)
-    this.updateUserName = this.updateUserName.bind(this)
+    this.sendMessage = this.sendMessage.bind(this);
+    this.updateUserName = this.updateUserName.bind(this);
     
   }
   
@@ -29,8 +28,8 @@ class App extends Component {
 
 
     if (e.key === "Enter") {
-      this.setState({currentUser: e.target.value})
-      this.state.websocket.send(JSON.stringify(info))
+      this.setState({currentUser: e.target.value});
+      this.state.websocket.send(JSON.stringify(info));
     }
   }  
 
@@ -40,11 +39,11 @@ class App extends Component {
       type: "postMessage",
       username: this.state.currentUser,
       content: e.target.value
-    }
+    };
     
     if (e.key === "Enter") {
-      this.state.websocket.send(JSON.stringify(jsonObject))
-      e.target.value = ''
+      this.state.websocket.send(JSON.stringify(jsonObject));
+      e.target.value = '';
   }
   }
 
@@ -56,48 +55,42 @@ class App extends Component {
 
     socket.onopen = function (e) {
       this.setState ({ websocket: socket});
-    }.bind(this)
+    }.bind(this);
 
     
 
 
-    // Thsi is to push the data into the messages array in our state so it can display.
+    // This is to push the data into the messages array in our state so it can display.
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.type) {
         const messages = this.state.messages;
         const data = JSON.parse(e.data);
-        messages.push(data)
-        this.setState({messages})
+        messages.push(data);
+        this.setState({messages});
   
         
       } else {
         // add this set time out animation to offset weired user exp when loading time is milisecond
         setTimeout(() => {
-          this.setState({amountOfUsers: data})
-        }, 400)
+          this.setState({amountOfUsers: data});
+        }, 400);
       }
-    }
-  
-
-    socket.onclose = (e) => {
-     
-    }
-    
-
+    };
   
     setTimeout(() => {
       
       // Add a new message to the list of messages in the data store
       const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
+      const messages = this.state.messages.concat(newMessage);
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
       
-      this.setState({messages: messages})
+      this.setState({messages: messages});
      
     }, 3000);
   }
+  
   render() {
     return (
       <div>
