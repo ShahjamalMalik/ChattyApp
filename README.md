@@ -8,7 +8,8 @@ Install the dependencies and start the server.
 
 ```
 npm install
-npm start
+npm start in ChattyApp directory
+npm start in ChattyApp-Server directory for WebSocket Server
 open http://localhost:3000
 ```
 
